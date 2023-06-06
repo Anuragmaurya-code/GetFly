@@ -86,7 +86,7 @@ app.post('/reissuebooks',(req, res) => {
 
 app.post('/dashboard', (req, res) => {
   // Send a response back to the client
-  res.status(200).json({ tb:1000,bic:20,bi:20,bri:49 });
+  res.status(200).json({ tb:1000,bic:200,bi:20,bri:49 });
 });
 
 
