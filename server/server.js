@@ -29,7 +29,6 @@ app.get('/api/data', (req, res) => {
 });
 app.post('/login', (req, res) => {
   const { username, password } = req.body;
-  // Handle the form fields (username and password) as needed
   // Example: validate credentials, authenticate user, etc.
   console.log('Received form fields:', { username, password });
   if(username ==='admin' && password ==='admin'){
@@ -43,10 +42,10 @@ app.post('/login', (req, res) => {
 });
 
 app.post('/addbooks', (req, res) => {
-  const { catCat,acqCat ,holHol} = req.body;
+  const { catCat,acqCat ,holHol,catTit} = req.body;
   // Handle the form fields (username and password) as needed
   // Example: validate credentials, authenticate user, etc.
-  console.log('Received form fields:', {catCat,acqCat ,holHol });
+  console.log('Received form fields:', {catCat,acqCat ,holHol,catTit });
   if(catCat && acqCat && holHol){
     res.status(200).json({ message: 'successful added' });
   } else {
@@ -74,6 +73,7 @@ app.post('/issuebooks', (req, res) => {
 const info=[
   {bookid: 'wwe',name: 'johncena',from:'21 May 2004',to:'21 May 2023'},
   {bookid: 'youtube',name: 'ksi',from:'21 May 2013',to:'21 May 2023'},
+  {bookid: 'tv',name: 'ksi',from:'21 May 2013',to:'21 May 2023'},
   {bookid: 'tv',name: 'ksi',from:'21 May 2013',to:'21 May 2023'}
 ];
 app.get('/reissuebooks',(req, res) => { 
@@ -86,7 +86,7 @@ app.post('/reissuebooks',(req, res) => {
 
 app.post('/dashboard', (req, res) => {
   // Send a response back to the client
-  res.status(200).json({ tb:1000,bic:200,bi:20,bri:49 });
+  res.status(200).json({ tb:1007,bic:200,bi:20,bri:49 });
 });
 
 

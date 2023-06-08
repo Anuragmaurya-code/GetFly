@@ -28,12 +28,8 @@ const Sidebar = () => {
           </React.Fragment>
         )}
         <li style={styles.option}>
-          <i className="fas fa-money-bill-wave" style={styles.icon}></i>
-          <span style={styles.optionText}>Collect Fee</span>
-        </li>
-        <li style={styles.option}>
           <i className="fas fa-receipt" style={styles.icon}></i>
-          <span style={styles.optionText}>Generate Receipts</span>
+          <span style={styles.optionText}><Link to='/report'>Generate Receipts</Link></span>
         </li>
         <li style={styles.option}>
           <i className="fas fa-sign-out-alt" style={styles.icon}></i>

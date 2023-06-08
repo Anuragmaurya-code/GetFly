@@ -7,7 +7,7 @@ const MainContent = () => {
   const [bookInfo, setBookInfo] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
   const navigate = useNavigate();
-
+  const [bookList, setBookList] = useState([]);
   useEffect(() => {
     const timer = setInterval(() => {
       setCurrentTime(new Date());
@@ -34,14 +34,17 @@ const MainContent = () => {
     };
     return currentTime.toLocaleString('en-US', options);
   };
-
-  const handleUpdateButtonClick = async (bookId, action) => {
-    // Create an object with the selected book information and action
+  const handleActionButtonClick = async(bookId, action) => {
     const selectedBook = bookInfo.find((book) => book.bookid === bookId);
     const payload = {
       ...selectedBook,
       action,
     };
+    setBookList(oldArray=>[...oldArray,payload]);
+  }
+
+  const handleUpdateButtonClick = async (e) => {
+    // Create an object with the selected book information and action
 
     try {
       const response = await fetch('http://localhost:5000/reissuebooks', {
@@ -49,11 +52,12 @@ const MainContent = () => {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(payload),
+        body: JSON.stringify(bookList),
       });
 
       if (response.status === 200) {
         alert('Success');
+        setBookList([]);
         navigate('/reissuebooks');
       } else {
         alert('Something went wrong');
@@ -106,15 +110,16 @@ const MainContent = () => {
               <td>{book.from}</td>
               <td>{book.to}</td>
               <td>
-                <button onClick={() => handleUpdateButtonClick(book.bookid, 'reissue')}>
+                <button onClick={() => handleActionButtonClick(book.bookid, 'reissue')}>
                   Reissue
                 </button>
-                <button onClick={() => handleUpdateButtonClick(book.bookid, 'collect')}>
+                <button onClick={() => handleActionButtonClick(book.bookid, 'collect')}>
                   Collect
                 </button>
               </td>
             </tr>
           ))}
+          <button onClick={handleUpdateButtonClick}>Update</button>
         </tbody>
       </table>
     </div>

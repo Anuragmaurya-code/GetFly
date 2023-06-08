@@ -88,7 +88,7 @@ const MainContent = () => {
         
 
         <button className="small-button" style={{ backgroundColor: 'blue', color: 'white' }} onClick={handleUpdateButtonClick}>
-          update
+          Issue Book
         </button>
       </div>
 

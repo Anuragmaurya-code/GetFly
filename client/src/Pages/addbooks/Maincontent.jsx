@@ -30,6 +30,7 @@ const MainContent = () => {
     catCat:null,
     acqCat:null,
     holHol:null,
+    catTit:null,
   });
 
   const handleInputChange = (event) => {
@@ -74,6 +75,10 @@ const MainContent = () => {
           <div className="form-field">
             <label htmlFor="catCat">Cat.No</label>
             <input type="number" id="catCat" value={formFields.catCat} onChange={handleInputChange} />
+          </div>
+          <div className="form-field">
+            <label htmlFor="catTit">Title</label>
+            <input type="text" id="catTit" value={formFields.catTit} onChange={handleInputChange} />
           </div>
         </div>
         <div className="acquisition">
