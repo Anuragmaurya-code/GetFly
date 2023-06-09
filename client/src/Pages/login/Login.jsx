@@ -3,34 +3,39 @@ import './login.css';
 import logo from './logo.png';
 import { AiFillEye, AiFillEyeInvisible } from 'react-icons/ai';
 import { useNavigate } from 'react-router-dom';
-export default function Login() {
+export default function Login({onLogin}) {
   const [eye, setEye] = useState(false);
   const [formFields, setFormFields] = useState({
-    username: '',
+    email: '',
     password: ''
   });
-  const navigate=useNavigate();
+  const navigate = useNavigate();
 
-  const  handleSubmit = async(e) => {
-  e.preventDefault();
+  const handleSubmit = (e) => {
+    e.preventDefault();
     // Add code here for submitting the form
-  const res=await fetch('http://localhost:5000/login', {
-  method: 'POST',
-  headers: {
-    'Content-Type': 'application/json'
-  },
-  body: JSON.stringify(formFields)
-  }) 
-  .then((res)=>{
-    if (res.status===200){
-      navigate('/dashboard')
-    }
-    else{
-      alert('Wrong password')
-    }
-  })
+    fetch('http://localhost:5001/login', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(formFields)
+    })
+      .then(response => response.json())
+      .then(response => {
+        if (response.token)
+        { onLogin(response.token)
+          navigate("/dashboard")
+        }
+        else
+          alert("Invalid Credentials");
 
-  
+      })
+      .catch(error => {
+        // Handle any errors
+        console.error(error);
+      });
+
   };
 
   const handleInputChange = (e) => {
@@ -57,9 +62,9 @@ export default function Login() {
               </label>
               <input
                 type="text"
-                name="username"
+                name="email"
                 placeholder="id@pvppcoe.ac.in"
-                value={formFields.username}
+                value={formFields.email}
                 onChange={handleInputChange}
               />
             </div>
@@ -96,4 +101,3 @@ export default function Login() {
     </div>
   );
 }
-        

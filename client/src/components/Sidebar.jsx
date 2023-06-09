@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-const Sidebar = () => {
+const Sidebar = ({onLogout}) => {
   const [showOptions, setShowOptions] = useState(false);
 
   const toggleOptions = () => {
@@ -33,7 +33,7 @@ const Sidebar = () => {
         </li>
         <li style={styles.option}>
           <i className="fas fa-sign-out-alt" style={styles.icon}></i>
-          <span style={styles.optionText}>Logout</span>
+          <span style={styles.optionText} onClick={onLogout}>Logout</span>
         </li>
       </ul>
       <footer style={styles.footer}>
