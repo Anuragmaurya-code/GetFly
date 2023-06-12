@@ -11,12 +11,16 @@ const issueBooks = connection.define(
       primaryKey: true,
       allowNull: false,
     },
+    quantity_id: {
+      type: Sequelize.DataTypes.STRING,
+      allowNull: false,
+    },
     issue_date: {
-      type: Sequelize.DataTypes.DATE,
+      type: Sequelize.DataTypes.DATEONLY,
       allowNull: false,
     },
     due_date: {
-      type: Sequelize.DataTypes.DATE,
+      type: Sequelize.DataTypes.DATEONLY,
       allowNull: false,
     },
     sid: {
@@ -24,13 +28,22 @@ const issueBooks = connection.define(
       allowNull: false,
     },
     return_date: {
-      type: Sequelize.DataTypes.DATE,
+      type: Sequelize.DataTypes.DATEONLY,
       allowNull: true,
     },
     isReturned: {
       type: DataTypes.BOOLEAN,
       allowNull: false,
       default: 0,
+    },
+    isReissued: {
+      type: DataTypes.BOOLEAN,
+      allowNull: false,
+      default: 0,
+    },
+    reIssue_Id: {
+      type: DataTypes.STRING,
+      allowNull: true,
     },
   },
   {
@@ -41,8 +54,8 @@ const issueBooks = connection.define(
   }
 );
 
-issueBooks.belongsTo(quantityModel, {
-  foriegnKey: "quantity_id",
-});
+// issueBooks.belongsTo(quantityModel, {
+//   foriegnKey: "quantity_id",
+// });
 
 module.exports = issueBooks;
