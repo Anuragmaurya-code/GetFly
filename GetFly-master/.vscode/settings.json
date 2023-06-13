@@ -1,0 +1,11 @@
+{
+    "doxdocgen.generic.customTags": [
+
+    ],
+    "emmet.preferences": {
+
+    },
+    "emmet.includeLanguages": {
+        "javascript": "javascriptreact"
+    }
+}
