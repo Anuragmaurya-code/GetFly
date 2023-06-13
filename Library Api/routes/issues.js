@@ -1,8 +1,8 @@
 const express = require("express");
 const verifyToken = require("../middleware/verifyToken");
-const reIssueBookController = require("../controllers/reIssueBookController");
+const issues = require("../controllers/issues");
 const router = express.Router();
 
-router.post("/", verifyToken, reIssueBookController);
+router.get("/", verifyToken, issues);
 
 module.exports = router;
