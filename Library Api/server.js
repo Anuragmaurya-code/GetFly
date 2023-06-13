@@ -1,17 +1,15 @@
 // ! New Code
 const express = require("express");
 const app = express();
-const cors = require('cors');
 const bodyParser = require("body-parser");
 const sequelize = require("./dbconfig");
-app.use(cors());
-app.use(express.json());
 
 // ! Routes importing
 const loginRoute = require("./routes/login");
 const dashboardRoute = require("./routes/dashboard");
 const addBookRoute = require("./routes/addBook");
 const issueBookRouter = require("./routes/issueBook");
+const issues = require("./routes/issues");
 const reIssueBookRouter = require("./routes/reIssueBook");
 const collectBookRouter = require("./routes/collectBook");
 const addStudentRoute = require("./routes/addStudent");
@@ -59,6 +57,7 @@ app.use("/login", loginRoute);
 app.use("/dashboard", dashboardRoute);
 app.use("/addBook", addBookRoute);
 app.use("/issueBook", issueBookRouter);
+app.use("/issues", issues);
 app.use("/reIssueBook", reIssueBookRouter);
 app.use("/collectBook", collectBookRouter);
 app.use("/addStudent", addStudentRoute);
