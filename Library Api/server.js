@@ -3,7 +3,9 @@ const express = require("express");
 const app = express();
 const bodyParser = require("body-parser");
 const sequelize = require("./dbconfig");
-
+const cors = require('cors')
+app.use(cors())
+ 
 // ! Routes importing
 const loginRoute = require("./routes/login");
 const dashboardRoute = require("./routes/dashboard");

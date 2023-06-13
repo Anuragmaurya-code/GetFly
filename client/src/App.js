@@ -20,13 +20,6 @@ function App() {
       localStorage.removeItem('token');
     }
   }, [token]);
-  useEffect(() => {
-    console.log('Token:', token);
-  }, [token]);
-
-  useEffect(() => {
-    console.log('localStorage token:', localStorage.getItem('token'));
-  }, []);
 
   const navigate=useNavigate()
   const handleLogin = (newToken) => {
@@ -47,23 +40,23 @@ function App() {
     },
     {
       path: '/dashboard',
-      element: isAuthenticated ? <Dashboard onLogout={handleLogout} /> : <Navigate to="/" replace />,
+      element: isAuthenticated ? <Dashboard onLogout={handleLogout} token={token}/> : <Navigate to="/" replace />,
     },
     {
       path: '/addbooks',
-      element: isAuthenticated ? <AddBooks /> : <Navigate to="/" replace />,
+      element: isAuthenticated ? <AddBooks onLogout={handleLogout} token={token}/> : <Navigate to="/" replace />,
     },
     {
       path: '/issuebooks',
-      element: isAuthenticated ? <IssueBooks /> : <Navigate to="/" replace />,
+      element: isAuthenticated ? <IssueBooks onLogout={handleLogout} token={token}/> : <Navigate to="/" replace />,
     },
     {
       path: '/reissuebooks',
-      element: isAuthenticated ? <ReissueBooks /> : <Navigate to="/" replace />,
+      element: isAuthenticated ? <ReissueBooks onLogout={handleLogout} token={token}/> : <Navigate to="/" replace />,
     },
     {
       path: '/report',
-      element: isAuthenticated ? <Report /> : <Navigate to="/" replace />,
+      element: isAuthenticated ? <Report onLogout={handleLogout} token={token}/> : <Navigate to="/" replace />,
     },
   ]);
 

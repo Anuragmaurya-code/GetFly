@@ -2,7 +2,6 @@ const express = require("express");
 const issueBooks = require("../models/issueBook");
 
 module.exports = function issueBook(req, res) {
-  console.log(req.body);
   b = req.body;
   issueBooks
     .create({

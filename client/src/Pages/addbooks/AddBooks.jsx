@@ -3,13 +3,13 @@ import './addbooks.css'
 import Sidebar from '../../components/Sidebar'
 import Navbar from '../../components/Navbar'
 import Maincontent from './Maincontent';
-const AddBooks = () => {
+const AddBooks = ({onLogout,token}) => {
   return (
     <div className="container" style={{display:'flex'}}>
       <Navbar />
       <div className="content">
-        <Sidebar/>
-        <Maincontent/>
+        <Sidebar  onLogout={onLogout}/>
+        <Maincontent token={token} />
       </div>
     </div>
   )

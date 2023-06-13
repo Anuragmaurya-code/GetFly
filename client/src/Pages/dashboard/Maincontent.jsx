@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import './Maincontent.css';
 import { useNavigate } from 'react-router-dom';
-;
-const MainContent = () => {
+import DateComponent from '../../components/DateComponent';
+const MainContent = ({token}) => {
   const [currentTime, setCurrentTime] = useState(new Date());
   const [data, setData] = useState({
     bi: '',
@@ -11,27 +11,20 @@ const MainContent = () => {
     bri:''
   });
   const navigate=useNavigate()
+  
   useEffect(() => {
-    const timer = setInterval(() => {
-      setCurrentTime(new Date());
-    }, 1000);
-    return () => {
-      clearInterval(timer);
-    };
-  }, []);
-
-  useEffect(() => {
-    const res = fetch('http://localhost:5000/dashboard', {
-      method: 'POST',
+    const res = fetch('http://localhost:5001/dashboard', {
+      method: 'GET',
       headers: {
+        'Authorization': 'Bearer ' +token,
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify(data)
     })
     .then(response => response.json())
     .then(data => {
+      console.log(data);
       setData(prevState=>{
-        return {...prevState,tb:data.tb,bic:data.bic,bi:data.bi,bri:data.bri}
+        return {...prevState,tb:data.booksCount,bic:data.circulationBooks,bi:data.issuedBooks,bri:data.booksReissued}
       })
     })
     .catch(error => {
@@ -41,25 +34,13 @@ const MainContent = () => {
     
     console.log(res)
   }, []);
-
-  const formatDate = () => {
-    const options = {
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric',
-      weekday: 'long',
-      hour: 'numeric',
-      minute: 'numeric',
-      second: 'numeric',
-    };
-    return currentTime.toLocaleString('en-US', options);
-  };
-
   return (
     <div style={styles.mainContent}>
-      <div style={styles.greeting}>
+      <div style={styles.time}>
         <h2>Hello, User</h2>
-        <p>{formatDate()}</p>
+        <div>
+          <DateComponent />
+        </div>
       </div>
       <hr style={styles.horizontalLine} />
       {/* Your main content goes here */}
@@ -104,6 +85,12 @@ const styles = {
     borderTop: '1px solid #ccc',
     margin: '20px 0',
   },
+  time: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
 };
+
 
 

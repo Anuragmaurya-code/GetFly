@@ -24,7 +24,7 @@ module.exports = function addBook(req, res) {
       console.log("Error while adding student data");
       // console.log(error.message);
       // console.log(error.name);
-      console.log(error.errors[0].message);
+      console.log(error);
       res.status(500).json({
         message: error.errors[0].message,
         errorType: error.message,
