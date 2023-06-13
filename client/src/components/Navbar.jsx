@@ -10,7 +10,7 @@ const Navbar = () => {
       </div>
       <div style={styles.navbarRight}>
       <i className="fas fa-user"></i>
-        <span style={styles.dashboard}> <Link to='/dashboard'>Dashboard</Link> </span>
+        <span style={styles.dashboard}> <Link to='/dashboard' style={styles.link}>Dashboard</Link> </span>
       </div>
     </nav>
   );
@@ -40,9 +40,14 @@ const styles = {
     fontSize: '18px',
   },
   navbarRight: {
+    textDecoration:'none',
     marginRight: '10px',
   },
   dashboard: {
     fontWeight: 'bold',
   },
+  link:{
+    color:'inherit',
+    textDecoration:'none',
+  }
 };

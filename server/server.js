@@ -42,18 +42,16 @@ app.post('/login', (req, res) => {
 });
 
 app.post('/addbooks', (req, res) => {
-  const { catCat,acqCat ,holHol,catTit} = req.body;
-  // Handle the form fields (username and password) as needed
-  // Example: validate credentials, authenticate user, etc.
-  console.log('Received form fields:', {catCat,acqCat ,holHol,catTit });
-  if(catCat && acqCat && holHol){
-    res.status(200).json({ message: 'successful added' });
+  const formFields = req.body;
+
+  const allValuesExist = Object.values(formFields).every(value => value !== null);
+  console.log(formFields)
+  if (allValuesExist) {
+    res.status(200).json({ message: 'Successful added' });
   } else {
     // If invalid, send a "Not OK" response with status code 401
     res.status(401).json({ message: 'Something went wrong' });
   }
-
-  // Send a response back to the client
 });
 
 app.post('/issuebooks', (req, res) => {

@@ -67,6 +67,7 @@ const MainContent = () => {
       <hr style={styles.horizontalLine} />
 
       <div>
+      <div>
         <h2>Generate Report</h2>
         <label htmlFor="report">Select Report:</label>
         <select id="report" onChange={handleReportSelection}>
@@ -77,9 +78,9 @@ const MainContent = () => {
           <option value="due-dated">Due dated book</option>
           <option value="circulated-book">Circulated book</option>
         </select>
-        <button onClick={handleGenerateReport}>Generate Report</button>
       </div>
-
+      <button onClick={handleGenerateReport}>Generate Report</button>
+      </div>
       {reportData.length > 0 && (
         <table>
           <thead>

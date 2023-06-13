@@ -17,19 +17,19 @@ const Sidebar = ({onLogout}) => {
         {showOptions && (
           <React.Fragment>
             <li style={styles.subOption}>
-              <span style={styles.subOptionText}><Link to='/addbooks'>Add Books</Link> </span>
+              <span style={styles.subOptionText}><Link to='/addbooks' style={styles.link}>Add Books</Link> </span>
             </li>
             <li style={styles.subOption}>
-              <span style={styles.subOptionText}><Link to='/issuebooks'>Issue Books</Link></span>
+              <span style={styles.subOptionText}><Link to='/issuebooks'  style={styles.link}>Issue Books</Link></span>
             </li>
             <li style={styles.subOption}>
-              <span style={styles.subOptionText}><Link to='/reissuebooks'>Reissue Books</Link></span>
+              <span style={styles.subOptionText}><Link to='/reissuebooks' style={styles.link}>Reissue Books</Link></span>
             </li>
           </React.Fragment>
         )}
         <li style={styles.option}>
           <i className="fas fa-receipt" style={styles.icon}></i>
-          <span style={styles.optionText}><Link to='/report'>Generate Receipts</Link></span>
+          <span style={styles.optionText}><Link to='/report'  style={styles.link}>Generate Report</Link></span>
         </li>
         <li style={styles.option}>
           <i className="fas fa-sign-out-alt" style={styles.icon}></i>
@@ -84,4 +84,9 @@ const styles = {
     color: '#666',
     alignSelf: 'flex-end',
   },
+  link:{
+    color:'inherit',
+    textDecoration:'none',
+  },
+  
 };
