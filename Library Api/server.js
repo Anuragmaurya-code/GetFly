@@ -18,7 +18,7 @@ const addStudentRoute = require("./routes/addStudent");
 const reportsRoute = require("./routes/reports");
 
 const dotenv = require("dotenv");
-
+// jdjd
 dotenv.config(); // * To get the variables from the dotenv file by using "process.env.VARIABLE_NAME"
 
 app.use(
