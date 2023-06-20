@@ -4,26 +4,27 @@
     display: flex;
     flex-direction: column;
     height: 100vh;
-  }
-  
-  .content {
+}
+
+.content {
     display: flex;
     flex-grow: 1;
-  }
-  
-  nav {
+}
+
+nav {
     background-color: #f1f1f1;
     padding: 10px;
-  }
-  
-  aside {
-    width: 200px;
+    color: blueviolet;
+}
+
+aside {
+    width: 10px;
     background-color: #f9f9f9;
     padding: 10px;
-  }
-  
-  main {
+    color: blue;
+}
+
+main {
     flex-grow: 1;
     padding: 10px;
-  }
-  
+}

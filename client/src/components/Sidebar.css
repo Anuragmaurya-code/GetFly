@@ -1,0 +1,85 @@
+.sidebar {
+    background-color: #f9f9f9;
+    padding: 10px;
+    color: bold;
+}
+
+.optionList {
+    list-style-type: none;
+    padding: 0;
+}
+
+.option {
+    display: flex;
+    align-items: center;
+    margin: 20px 0;
+    cursor: pointer;
+}
+
+.subOption {
+    display: flex;
+    align-items: center;
+    margin-left: 30px;
+    padding:5px 0;
+    cursor: pointer;
+}
+
+.icon {
+    margin-right: 10px;
+}
+
+.optionText {
+    font-size: 16px;
+    display: inline;
+    color: solid;
+    margin-left: px;
+}
+
+.subOptionText {
+    font-size: 16px;
+}
+
+.footer {
+    margin-top: auto;
+    justify-content: bottom;
+    margin-left: 35px;
+    margin-top: 600px;
+    text-align: bottom;
+    align-self: flex-end;
+}
+
+.footerText {
+    font-size: 12px;
+    color: #666;
+    align-self: flex-end;
+    position: absolute;
+    bottom: 0px;
+}
+
+.link {
+    color: inherit;
+    text-decoration: none;
+    font-size: 16px;
+}
+
+.logo3 {
+    width: 30px;
+    height: 30px;
+    padding: 0px;
+    margin-right: 10px;
+}
+
+.logo4 {
+    width: 30px;
+    height: 30px;
+    padding: 0px;
+    margin-right: 10px;
+    display: inline;
+}
+
+.logo5 {
+    width: 30px;
+    height: 30px;
+    padding: 0px;
+    margin-right: 10px;
+}

@@ -1,3 +1,104 @@
-.dbcontent{
-     border-style:solid;
+.rbutton {
+    display: inline-flexbox;
+    width: 80px;
+    border: whitesmoke;
+    height: 25px;
+    margin-right: 10px;
+    color: white;
+    background-color: rgb(8, 66, 182);
+}
+
+.catalogue {
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    font-size: 20px;
+    color: rgba(0, 0, 0, 0.563);
+}
+
+.search {
+    width: 250px;
+    height: 25px;
+}
+
+.cbutton {
+    display: inline-flexbox;
+    width: 80px;
+    border: whitesmoke;
+    height: 25px;
+    color: white;
+    background-color: rgb(41, 192, 142);
+}
+
+.up-button {
+    display: inline;
+    align-items: center;
+    position: absolute;
+    margin-top:15px;
+    justify-content: center;
+    text-align: center;
+    padding: 0.5rem;
+    margin-left: 30rem;
+    margin-top: 100 px;
+    width: 100px;
+    border: whitesmoke;
+    border-radius: 5px;
+    box-shadow: 0 0 0 1px #5daec8f9;
+}
+
+table {
+    margin-top: 30px;
+    border: 1rem hidden white;
+    border-collapse: collapse;
+    box-shadow: 0 0 0 1px black;
+    overflow: hidden;
+    max-width: 10rem;
+}
+
+li,
+p,
+a,
+td {
+    font-size: 0.8rem;
+    line-height: 1;
+}
+
+thead {
+    font-size: 0.8rem;
+    background-color: white;
+    color: black;
+}
+
+th,
+td {
+    border: 1px solid black;
+    min-width: 11rem;
+    padding: 0.5rem;
+    line-height: 1;
+}
+
+td {
+    font-size: 0.8rem;
+}
+
+.mainContent {
+    flex: 1;
+    padding: 20px;
+}
+
+.greeting {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin-bottom: 20px;
+}
+
+.horizontalLine {
+    border: none;
+    border-top: 1px solid #ccc;
+    margin: 20px 0;
+}
+
+.time {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }

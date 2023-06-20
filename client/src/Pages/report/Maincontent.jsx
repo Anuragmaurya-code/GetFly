@@ -1,12 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import './Maincontent.css';
 import { useNavigate } from 'react-router-dom';
+import DateComponent from '../../components/DateComponent';
+import { saveAs } from 'file-saver';
 
-const MainContent = () => {
+const MainContent = ({ token }) => {
   const [currentTime, setCurrentTime] = useState(new Date());
   const navigate = useNavigate();
   const [selectedReport, setSelectedReport] = useState('');
   const [reportData, setReportData] = useState([]);
+  const [startDate, setStartDate] = useState('');
+  const [endDate, setEndDate] = useState('');
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -17,38 +21,32 @@ const MainContent = () => {
     };
   }, []);
 
-  const formatDate = () => {
-    const options = {
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric',
-      weekday: 'long',
-      hour: 'numeric',
-      minute: 'numeric',
-      second: 'numeric',
-    };
-    return currentTime.toLocaleString('en-US', options);
-  };
-
   const handleGenerateReport = () => {
-    if (selectedReport) {
-      fetch('http://localhost:5000/report', {
-        method: 'POST',
+    if (selectedReport && startDate && endDate) {
+      const queryParams = new URLSearchParams({
+        reportName: selectedReport,
+        startDate,
+        endDate
+      }).toString();
+      console.log(queryParams);
+      fetch('http://localhost:5001/report?' + queryParams, {
+        method: 'GET',
         headers: {
+          Authorization: 'Bearer ' + token,
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ reportType: selectedReport }),
       })
         .then((res) => {
           if (res.ok) {
-            return res.json();
+            console.log('done!');
+            return res.blob();
           } else {
             throw new Error('Error: ' + res.status);
           }
         })
-        .then((data) => {
-          console.log(data);
-          setReportData(data);
+        .then((blob) => {
+          // Save the blob as an Excel file
+          saveAs(blob, 'report.xlsx');
         })
         .catch((error) => console.log(error));
     }
@@ -58,71 +56,67 @@ const MainContent = () => {
     setSelectedReport(e.target.value);
   };
 
+  const handleStartDateChange = (e) => {
+    setStartDate(e.target.value);
+  };
+
+  const handleEndDateChange = (e) => {
+    setEndDate(e.target.value);
+  };
+  const today = new Date();
+  today.setDate(today.getDate());
+
+
+
   return (
-    <div style={styles.mainContent}>
-      <div style={styles.greeting}>
+    <div className="mainContent">
+      <div className="time">
         <h2>Hello, User</h2>
-        <p>{formatDate()}</p>
+        <div>
+          <DateComponent />
+        </div>
       </div>
-      <hr style={styles.horizontalLine} />
+      <hr className="horizontalLine" />
 
       <div>
-      <div>
-        <h2>Generate Report</h2>
-        <label htmlFor="report">Select Report:</label>
-        <select id="report" onChange={handleReportSelection}>
-          <option value="">Select a report</option>
-          <option value="daily-transaction">Daily book transaction</option>
-          <option value="daily-reissued">Daily book reissued</option>
-          <option value="lost-book">Lost book</option>
-          <option value="due-dated">Due dated book</option>
-          <option value="circulated-book">Circulated book</option>
-        </select>
+        <div className="select">
+          <h2>Generate Reports</h2>
+          <div className="relect">
+            <label htmlFor="report">Select Report </label>
+            <select className="drelect" id="report" onChange={handleReportSelection}>
+              <option value="">Daily Transaction Report</option>
+              <option value="issuedBooks">Daily book transaction</option>
+              <option value="reIssuedBooks">Daily book reissued</option>
+              <option value="lostBooks">Lost book</option>
+              <option value="dueDatedBooks">Due dated book</option>
+              <option value="circulatedBooks">Circulated book</option>
+            </select>
+          </div>
+        </div>
+
+        <div className="dates">
+          <div className="datePicker">
+            <label htmlFor="startDate">Start Date:</label>
+            <input type="date" id="startDate" value={startDate} max={today.toISOString().slice(0, 10)} onChange={handleStartDateChange} />
+          </div>
+          <div className="datePicker">
+            <label htmlFor="endDate">End Date:</label>
+            <input type="date" id="endDate" value={endDate} min={startDate} max={today.toISOString().slice(0, 10)} onChange={handleEndDateChange} />
+          </div>
+        </div>
+
+        <div className=" bt">
+          <button
+            className="small-button"
+            style={{ backgroundColor: 'blue', color: 'white', border: 'blue' }}
+            onClick={handleGenerateReport}
+          >
+            Generate Report
+          </button>
+        </div>
       </div>
-      <button onClick={handleGenerateReport}>Generate Report</button>
-      </div>
-      {reportData.length > 0 && (
-        <table>
-          <thead>
-            <tr>
-              <th>Book ID</th>
-              <th>Name</th>
-              <th>From Date</th>
-              <th>To Date</th>
-            </tr>
-          </thead>
-          <tbody>
-            {reportData.map((item) => (
-              <tr key={item.bookId}>
-                <td>{item.bookId}</td>
-                <td>{item.name}</td>
-                <td>{item.fromDate}</td>
-                <td>{item.toDate}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      )}
     </div>
   );
-};
-
-const styles = {
-  mainContent: {
-    flex: 1,
-    padding: '20px',
-  },
-  greeting: {
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'flex-start',
-    marginBottom: '20px',
-  },
-  horizontalLine: {
-    border: 'none',
-    borderTop: '1px solid #ccc',
-    margin: '20px 0',
-  },
 };
 
 export default MainContent;

@@ -1,63 +1,83 @@
 import React, { useState, useEffect } from 'react';
 import './Maincontent.css';
 import { useNavigate } from 'react-router-dom';
+import DateComponent from '../../components/DateComponent';
 
-const MainContent = () => {
+const MainContent = ({ token }) => {
   const [currentTime, setCurrentTime] = useState(new Date());
   const [bookInfo, setBookInfo] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
   const navigate = useNavigate();
-  const [bookList, setBookList] = useState([]);
+  const [issuedBooks, setIssuedBooks] = useState({ issued_id: undefined });
+
   useEffect(() => {
-    const timer = setInterval(() => {
-      setCurrentTime(new Date());
-      fetch('http://localhost:5000/reissuebooks')
-      .then((res) => res.json())
-      .then((data) => setBookInfo(data.info))
-      .catch((error) => console.error('Error fetching book info:', error));
-    }, 1000);
+    const fetchData = async () => {
+      try {
+        const res = await fetch('http://localhost:5001/issues', {
+          method: 'GET',
+          headers: {
+            Authorization: 'Bearer ' + token,
+            'Content-Type': 'application/json',
+          },
+        });
+
+        if (res.ok) {
+          const data = await res.json();
+          
+          setBookInfo(data);
+          console.log(bookInfo);
+        } else {
+          console.error('Error fetching book info:', res.status);
+        }
+      } catch (error) {
+        console.error('Error fetching book info:', error);
+      }
+    };
+
+    const timer = setInterval(fetchData, 1000);
 
     return () => {
       clearInterval(timer);
     };
-  }, []);
+  }, [token]);
 
   const formatDate = () => {
-    const options = {
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric',
-      weekday: 'long',
-      hour: 'numeric',
-      minute: 'numeric',
-      second: 'numeric',
-    };
-    return currentTime.toLocaleString('en-US', options);
+    const date = new Date();
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, '0');
+    return `${year}/${month}/${day}`;
   };
-  const handleActionButtonClick = async(bookId, action) => {
-    const selectedBook = bookInfo.find((book) => book.bookid === bookId);
+
+  const handleActionButtonClick = (issued_id, action) => {
+    const selectedBook = bookInfo.find((book) => book.issued_id === issued_id);
     const payload = {
-      ...selectedBook,
-      action,
+      issued_id: selectedBook.issued_id,
+      return_date: formatDate(),
     };
-    setBookList(oldArray=>[...oldArray,payload]);
-  }
+    if (action === 'reissue') {
+      setIssuedBooks({ issued_id: selectedBook.issued_id });
+    } else if (action === 'collect') {
+      setIssuedBooks(payload);
+    }
+  };
 
-  const handleUpdateButtonClick = async (e) => {
-    // Create an object with the selected book information and action
-
+  const handleUpdateButtonClick = async () => {
+    const url = issuedBooks.return_date
+      ? 'http://localhost:5001/collectBook'
+      : 'http://localhost:5001/reIssueBook';
     try {
-      const response = await fetch('http://localhost:5000/reissuebooks', {
+      const response = await fetch(url, {
         method: 'POST',
         headers: {
+          Authorization: 'Bearer ' + token,
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(bookList),
+        body: JSON.stringify(issuedBooks),
       });
 
-      if (response.status === 200) {
+      if (response.ok) {
         alert('Success');
-        setBookList([]);
         navigate('/reissuebooks');
       } else {
         alert('Something went wrong');
@@ -72,76 +92,88 @@ const MainContent = () => {
   };
 
   const filteredBooks = bookInfo.filter((book) =>
-    book.bookid.toLowerCase().includes(searchTerm.toLowerCase())
+    book.book_id?.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   return (
-    <div style={styles.mainContent}>
-      <div style={styles.greeting}>
+    <div className="mainContent">
+      <div className="time">
         <h2>Hello, User</h2>
-        <p>{formatDate()}</p>
+        <div>
+          <DateComponent />
+        </div>
       </div>
-      <hr style={styles.horizontalLine} />
+      <hr className="horizontalLine" />
+      <div className="form-container">
+        <div className="issueBooks">
+          <h2>Master Tab &gt; Reissue, Collect</h2>
+        </div>
+      </div>
+      <div className="form-container">
+        <div className="catalogue">
+          <h5>Catalogue Info</h5>
+        </div>
+      </div>
 
       {/* Search input */}
       <input
+        className="search"
         type="text"
-        placeholder="Search by Book ID"
+        placeholder="🔍 Search Book Id"
         value={searchTerm}
         onChange={handleSearchChange}
       />
 
       {/* Render table with filtered book info */}
+      
+      {/* Render table with filtered book info */}
       <table>
         <thead>
           <tr>
             <th>Book ID</th>
-            <th>Name</th>
-            <th>From Date</th>
-            <th>To Date</th>
-            <th>Action</th>
+            <th>Student ID</th>
+            <th>Issue Date</th>
+            <th>Due Date</th>
+            <th>Approval</th>
           </tr>
         </thead>
         <tbody>
           {filteredBooks.map((book) => (
-            <tr key={book.bookid}>
-              <td>{book.bookid}</td>
-              <td>{book.name}</td>
-              <td>{book.from}</td>
-              <td>{book.to}</td>
+            <tr key={book.issued_id}>
+              <td>{book.book_id}</td>
+              <td>{book.sid}</td>
+              <td>{book.issue_date}</td>
+              <td>{book.due_date}</td>
               <td>
-                <button onClick={() => handleActionButtonClick(book.bookid, 'reissue')}>
+                <button
+                  className="rbutton"
+                  onClick={() => handleActionButtonClick(book.issued_id, 'reissue')}
+                >
                   Reissue
                 </button>
-                <button onClick={() => handleActionButtonClick(book.bookid, 'collect')}>
+                <button
+                  className="cbutton"
+                  onClick={() => handleActionButtonClick(book.issued_id, 'collect')}
+                >
                   Collect
                 </button>
               </td>
             </tr>
           ))}
-          <button onClick={handleUpdateButtonClick}>Update</button>
         </tbody>
       </table>
+
+
+
+      <button
+        className="up-button"
+        style={{ backgroundColor: 'blue', color: 'white', justifyContent: 'center' }}
+        onClick={handleUpdateButtonClick}
+      >
+        Update
+      </button>
     </div>
   );
 };
 
 export default MainContent;
-
-const styles = {
-  mainContent: {
-    flex: 1,
-    padding: '20px',
-  },
-  greeting: {
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'flex-start',
-    marginBottom: '20px',
-  },
-  horizontalLine: {
-    border: 'none',
-    borderTop: '1px solid #ccc',
-    margin: '20px 0',
-  },
-};

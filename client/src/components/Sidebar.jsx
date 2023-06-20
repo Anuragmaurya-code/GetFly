@@ -1,43 +1,53 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import './Sidebar.css';
+import logo3 from './logo3.png';
+import logo4 from './logo4.png';
+import logo5 from './logo5.png';
 const Sidebar = ({onLogout}) => {
   const [showOptions, setShowOptions] = useState(false);
 
-  const toggleOptions = () => {
+  function toggleOptions() {
     setShowOptions(!showOptions);
-  };
+  }
 
   return (
-    <aside style={styles.sidebar}>
-      <ul style={styles.optionList}>
-        <li style={styles.option} onClick={toggleOptions}>
-          <i className="fas fa-table" style={styles.icon}></i>
-          <span style={styles.optionText}>Master Tab</span>
+
+    <aside className= "sidebar">
+      <ul className="optionList">
+        <li className="option">
+          <i className="icon"></i>
+          <img src={logo5} alt="report Logo" className="logo5" />
+          <span className="optionText"><Link to='/report' className="link">Generate Reports</Link></span>
+        </li>
+        <li className= "option" onClick={toggleOptions}>
+          <i className="icon"></i>
+          <img src={logo4} alt="master Logo" className="logo4" />
+          <span className= "optionText">Master Tab</span>
         </li>
         {showOptions && (
           <React.Fragment>
-            <li style={styles.subOption}>
-              <span style={styles.subOptionText}><Link to='/addbooks' style={styles.link}>Add Books</Link> </span>
+            <li className= "subOption">
+              <span className= "subOptionText"><Link to='/addbooks' className="link">Add Books</Link> </span>
             </li>
-            <li style={styles.subOption}>
-              <span style={styles.subOptionText}><Link to='/issuebooks'  style={styles.link}>Issue Books</Link></span>
+            <li className="subOption">
+              <span className= "subOptionText"><Link to='/issuebooks' className= "link">Issue Books</Link></span>
             </li>
-            <li style={styles.subOption}>
-              <span style={styles.subOptionText}><Link to='/reissuebooks' style={styles.link}>Reissue Books</Link></span>
+            <li className= "subOption">
+              <span className= "subOptionText"><Link to='/reissuebooks' className=" link">Reissue Books</Link></span>
             </li>
           </React.Fragment>
         )}
-        <li style={styles.option}>
-          <i className="fas fa-receipt" style={styles.icon}></i>
-          <span style={styles.optionText}><Link to='/report'  style={styles.link}>Generate Report</Link></span>
-        </li>
-        <li style={styles.option}>
-          <i className="fas fa-sign-out-alt" style={styles.icon}></i>
-          <span style={styles.optionText} onClick={onLogout}>Logout</span>
+
+        <li className= "option">
+          <i className="icon"></i>
+          <img src={logo3} alt="logout Logo" className="logo3" />
+          <span className= "optionText" onClick={onLogout}>Logout</span>
         </li>
       </ul>
-      <footer style={styles.footer}>
-        <p style={styles.footerText}>Ⓒ GetFly Technologies</p>
+      
+      <footer className= "footer">
+        <p className= "footerText">Ⓒ GetFly Technologies</p>
       </footer>
     </aside>
   );
@@ -45,48 +55,3 @@ const Sidebar = ({onLogout}) => {
 
 export default Sidebar;
 
-const styles = {
-  sidebar: {
-    backgroundColor: '#f9f9f9',
-    padding: '10px',
-  },
-  optionList: {
-    listStyleType: 'none',
-    padding: 0,
-  },
-  option: {
-    display: 'flex',
-    alignItems: 'center',
-    margin: '10px 0',
-    cursor: 'pointer',
-  },
-  subOption: {
-    display: 'flex',
-    alignItems: 'center',
-    marginLeft: '30px',
-    cursor: 'pointer',
-  },
-  icon: {
-    marginRight: '10px',
-  },
-  optionText: {
-    fontSize: '16px',
-  },
-  subOptionText: {
-    fontSize: '14px',
-  },
-  footer: {
-    marginTop: 'auto',
-    alignSelf: 'flex-end',
-  },
-  footerText: {
-    fontSize: '12px',
-    color: '#666',
-    alignSelf: 'flex-end',
-  },
-  link:{
-    color:'inherit',
-    textDecoration:'none',
-  },
-  
-};

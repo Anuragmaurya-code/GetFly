@@ -3,16 +3,16 @@ import './issuebooks.css'
 import Sidebar from '../../components/Sidebar'
 import Navbar from '../../components/Navbar'
 import Maincontent from './Maincontent';
-const AddBooks = () => {
+const IssueBooks = ({onLogout,token}) => {
   return (
-    <div className="container" style={{display:'flex'}}>
+    <div className="container">
       <Navbar />
       <div className="content">
-        <Sidebar/>
-        <Maincontent/>
+        <Sidebar onLogout={onLogout}/>
+        <Maincontent token={token}/>
       </div>
     </div>
   )
 }
 
-export default AddBooks
+export default IssueBooks

@@ -1,3 +1,44 @@
-.dbcontent{
-     border-style:solid;
+.form-field {
+    display: inline-block;
+    margin: 2px;
+    margin-bottom: 12px;
+    margin-right: 25px;
+    width: 180px;
+    height: 50px;
+}
+
+.small-button {
+    color: rgb(23, 23, 93);
+    width: 100px;
+    height: 30px;
+    border: rgb(19, 19, 99);
+    border-radius: 5px;
+    box-shadow: 0 0 0 1px rgb(24, 24, 104);
+    font-size: 20px;
+}
+
+.mainContent {
+    flex: 1;
+    padding: 20px;
+    display: inline-block;
+}
+
+.greeting {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin-bottom: 20px;
+    display: inline-block;
+}
+
+.horizontalLine {
+    border: none;
+    border-top: 1px solid #ccc;
+    margin: 20px 0;
+}
+
+.time {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }

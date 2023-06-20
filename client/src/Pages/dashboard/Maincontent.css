@@ -1,3 +1,50 @@
-.dbcontent{
-     border-style:solid;
+.dbcontent {
+    border: whitesmoke;
+    border-radius: 5px;
+    display: inline-block;
+    margin: 25px;
+    width: 230px;
+    height: 60px;
+    font-weight: bold;
+    box-shadow: 1px 2px 9px #d1c3c6;
+    padding: 15px;
+    font-size: 15px;
+}
+
+.no {
+    color: aqua;
+    padding: 5px;
+    font-size: 20px;
+}
+
+.mainContent: {
+    flex: 1;
+    padding: 30px;
+}
+
+.greeting {
+    display: inline;
+    flex-direction: row;
+    align-items: flex-end;
+    margin-bottom: 10px;
+    justify-content: right;
+    text-align: right;
+    padding: 30px;
+}
+
+.horizontalLine {
+    border: none;
+    border-top: 1px solid #ccc;
+    margin: 20px 0;
+}
+
+.h2 {
+    text-align: center;
+    justify-content: left;
+}
+
+.time {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }

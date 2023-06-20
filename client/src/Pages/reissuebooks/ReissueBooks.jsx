@@ -3,13 +3,13 @@ import './reissuebooks.css'
 import Sidebar from '../../components/Sidebar'
 import Navbar from '../../components/Navbar'
 import Maincontent from './Maincontent';
-const ReissueBooks = () => {
+const ReissueBooks = ({onLogout,token}) => {
   return (
-    <div className="container" style={{display:'flex'}}>
+    <div className="container" >
       <Navbar />
       <div className="content">
-        <Sidebar/>
-        <Maincontent/>
+        <Sidebar onLogout={onLogout}/>
+        <Maincontent token={token}/>
       </div>
     </div>
   )

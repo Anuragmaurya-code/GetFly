@@ -1,29 +1,28 @@
 /* App.css */
 
 .container {
-    display: flex;
-    flex-direction: column;
+    display: inline-block;
+    flex-direction: row;
     height: 100vh;
-  }
-  
-  .content {
-    display: flex;
+}
+
+.content {
+    display: inline;
     flex-grow: 1;
-  }
-  
-  nav {
+}
+
+nav {
     background-color: #f1f1f1;
-    padding: 10px;
-  }
-  
-  aside {
+    padding: 1px;
+}
+
+aside {
     width: 200px;
     background-color: #f9f9f9;
-    padding: 10px;
-  }
-  
-  main {
+    padding: 1px;
+}
+
+main {
     flex-grow: 1;
-    padding: 10px;
-  }
-  
+    padding: 1px;
+}

@@ -3,7 +3,6 @@ import './Maincontent.css';
 import { useNavigate } from 'react-router-dom';
 import DateComponent from '../../components/DateComponent';
 const MainContent = ({token}) => {
-  const [currentTime, setCurrentTime] = useState(new Date());
   const [data, setData] = useState({
     bi: '',
     tb: '',
@@ -34,32 +33,35 @@ const MainContent = ({token}) => {
     
     console.log(res)
   }, []);
+
   return (
-    <div style={styles.mainContent}>
-      <div style={styles.time}>
+    <div className= "mainContent">
+      <div className="time">
         <h2>Hello, User</h2>
         <div>
           <DateComponent />
         </div>
       </div>
-      <hr style={styles.horizontalLine} />
+      <hr className="horizontalLine" />
       {/* Your main content goes here */}
       <div className="elements">
         <div className="dbcontent">
-          <div className="text">Total number of books</div>
-          <div className="tb">{data.tb}</div>
+          <div className="text">Total No of Books</div>
+          
+          <div className="tb no">{data.tb}</div>
+          
         </div>
         <div className="dbcontent">
-          <div className="text">books</div>
-          <div className="bic">{data.bic}</div>
+          <div className="text">Books in Circulation</div>
+          <div className="bic no">{data.bic}</div>
         </div>
         <div className="dbcontent">
           <div className="text">Books issued</div>
-          <div className="bi">{data.bi}</div>
+          <div className="bi no">{data.bi}</div>
         </div>
         <div className="dbcontent">
-          <div className="text">Books reissued</div>
-          <div className="bri">{data.bri}</div>
+          <div className="text">Books Re issued</div>
+          <div className="bri no">{data.bri}</div>
         </div>
       </div>
 
@@ -68,29 +70,6 @@ const MainContent = ({token}) => {
 };
 
 export default MainContent;
-
-const styles = {
-  mainContent: {
-    flex: 1,
-    padding: '20px',
-  },
-  greeting: {
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'flex-start',
-    marginBottom: '20px',
-  },
-  horizontalLine: {
-    border: 'none',
-    borderTop: '1px solid #ccc',
-    margin: '20px 0',
-  },
-  time: {
-    display: 'flex',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-  },
-};
 
 
 
