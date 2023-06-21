@@ -3,7 +3,7 @@ import './Maincontent.css';
 import { useNavigate } from 'react-router-dom';
 import DateComponent from '../../components/DateComponent';
 
-const MainContent = ({ token }) => {
+const MainContent = ({ token,sid }) => {
   const [currentTime, setCurrentTime] = useState(new Date());
   const navigate = useNavigate();
 
@@ -21,7 +21,7 @@ const MainContent = ({ token }) => {
     issue_date: '',
     due_date: '',
     book_id: '',
-    sid: '',
+    sid: sid,
     return_date: '',
     quantity_id: '',
   });
@@ -83,10 +83,7 @@ const MainContent = ({ token }) => {
           <h2>Master Tab {'>'} Issue Book</h2>
           <form onSubmit={handleUpdateButtonClick}>
            
-            <div className="form-field">
-              <label htmlFor="sid">Student Id <span style={{ color: 'red' }}>*</span></label>
-              <input type="text" id="sid" value={formFields.sid} onChange={handleInputChange} required />
-            </div>
+            
             
             <div className="form-field">
               <label htmlFor="quantity_id">Quantity Id<span style={{ color: 'red' }}>*</span></label>

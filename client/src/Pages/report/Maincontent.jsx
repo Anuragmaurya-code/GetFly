@@ -2,9 +2,8 @@ import React, { useState, useEffect } from 'react';
 import './Maincontent.css';
 import { useNavigate } from 'react-router-dom';
 import DateComponent from '../../components/DateComponent';
-import { saveAs } from 'file-saver';
 
-const MainContent = ({ token }) => {
+const MainContent = ({ token, name, sid }) => {
   const [currentTime, setCurrentTime] = useState(new Date());
   const navigate = useNavigate();
   const [selectedReport, setSelectedReport] = useState('');
@@ -21,34 +20,34 @@ const MainContent = ({ token }) => {
     };
   }, []);
 
-  const handleGenerateReport = () => {
+  const handleGenerateReport = async () => {
     if (selectedReport && startDate && endDate) {
       const queryParams = new URLSearchParams({
         reportName: selectedReport,
         startDate,
         endDate
       }).toString();
-      console.log(queryParams);
-      fetch('http://localhost:5001/report?' + queryParams, {
-        method: 'GET',
-        headers: {
-          Authorization: 'Bearer ' + token,
-          'Content-Type': 'application/json',
-        },
-      })
-        .then((res) => {
-          if (res.ok) {
-            console.log('done!');
-            return res.blob();
-          } else {
-            throw new Error('Error: ' + res.status);
-          }
-        })
-        .then((blob) => {
-          // Save the blob as an Excel file
-          saveAs(blob, 'report.xlsx');
-        })
-        .catch((error) => console.log(error));
+      console.log(queryParams + sid);
+      try {
+        const response = await fetch('http://localhost:5001/report?' + queryParams, {
+          method: 'POST',
+          headers: {
+            Authorization: 'Bearer ' + token,
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ sid: sid }),
+        });
+
+        if (response.ok) {
+          const res = await response.json();
+          setReportData(res.data);
+          await console.log(res);
+        } else {
+          throw new Error('Error: ' + response.status);
+        }
+      } catch (error) {
+        console.log(error);
+      }
     }
   };
 
@@ -63,15 +62,14 @@ const MainContent = ({ token }) => {
   const handleEndDateChange = (e) => {
     setEndDate(e.target.value);
   };
+
   const today = new Date();
   today.setDate(today.getDate());
-
-
 
   return (
     <div className="mainContent">
       <div className="time">
-        <h2>Hello, User</h2>
+        <h2>Hello, {name}</h2>
         <div>
           <DateComponent />
         </div>
@@ -94,18 +92,18 @@ const MainContent = ({ token }) => {
           </div>
         </div>
 
-        <div className="dates">
+        <div className="relect">
           <div className="datePicker">
-            <label htmlFor="startDate">Start Date:</label>
-            <input type="date" id="startDate" value={startDate} max={today.toISOString().slice(0, 10)} onChange={handleStartDateChange} />
+            <label htmlFor="startDate">Start Date</label>
+            <input type="date" className="drelect" id="startDate" value={startDate} max={today.toISOString().slice(0, 10)} onChange={handleStartDateChange} />
           </div>
-          <div className="datePicker">
-            <label htmlFor="endDate">End Date:</label>
-            <input type="date" id="endDate" value={endDate} min={startDate} max={today.toISOString().slice(0, 10)} onChange={handleEndDateChange} />
+          <div className="relect">
+            <label htmlFor="endDate">End Date</label>
+            <input type="date" id="endDate" className="drelect" value={endDate} min={startDate} max={today.toISOString().slice(0, 10)} onChange={handleEndDateChange} />
           </div>
         </div>
 
-        <div className=" bt">
+        <div className="bt">
           <button
             className="small-button"
             style={{ backgroundColor: 'blue', color: 'white', border: 'blue' }}
@@ -114,6 +112,27 @@ const MainContent = ({ token }) => {
             Generate Report
           </button>
         </div>
+
+        {reportData.length > 0 && (
+          <table>
+            <thead>
+              <tr>
+                {Object.keys(reportData[0]).map((key) => (
+                  <th key={key}>{key}</th>
+                ))}
+              </tr>
+            </thead>
+            <tbody>
+              {reportData.map((data, index) => (
+                <tr key={index}>
+                  {Object.values(data).map((value, index) => (
+                    <td key={index}>{value}</td>
+                  ))}
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        )}
       </div>
     </div>
   );

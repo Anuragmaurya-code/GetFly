@@ -26,6 +26,7 @@
     height: 25px;
     color: white;
     background-color: rgb(41, 192, 142);
+    margin-right: 10px;
 }
 
 .up-button {
@@ -50,7 +51,7 @@ table {
     border-collapse: collapse;
     box-shadow: 0 0 0 1px black;
     overflow: hidden;
-    max-width: 10rem;
+    
 }
 
 li,
@@ -73,11 +74,10 @@ td {
     min-width: 11rem;
     padding: 0.5rem;
     line-height: 1;
-}
-
-td {
     font-size: 0.8rem;
 }
+
+
 
 .mainContent {
     flex: 1;

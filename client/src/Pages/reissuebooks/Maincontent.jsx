@@ -3,7 +3,7 @@ import './Maincontent.css';
 import { useNavigate } from 'react-router-dom';
 import DateComponent from '../../components/DateComponent';
 
-const MainContent = ({ token }) => {
+const MainContent = ({ token, name, sid }) => {
   const [currentTime, setCurrentTime] = useState(new Date());
   const [bookInfo, setBookInfo] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
@@ -14,18 +14,17 @@ const MainContent = ({ token }) => {
     const fetchData = async () => {
       try {
         const res = await fetch('http://localhost:5001/issues', {
-          method: 'GET',
+          method: 'POST',
           headers: {
             Authorization: 'Bearer ' + token,
             'Content-Type': 'application/json',
           },
+          body: JSON.stringify({ sid: sid }),
         });
 
         if (res.ok) {
           const data = await res.json();
-          
-          setBookInfo(data);
-          console.log(bookInfo);
+          setBookInfo(data.data);
         } else {
           console.error('Error fetching book info:', res.status);
         }
@@ -60,12 +59,24 @@ const MainContent = ({ token }) => {
     } else if (action === 'collect') {
       setIssuedBooks(payload);
     }
+    else {
+      setIssuedBooks({
+        sid: sid,
+        book_id: selectedBook.book_id,
+        date: formatDate(),
+      })
+    }
   };
 
   const handleUpdateButtonClick = async () => {
-    const url = issuedBooks.return_date
-      ? 'http://localhost:5001/collectBook'
-      : 'http://localhost:5001/reIssueBook';
+    let url = '';
+    if (issuedBooks.return_date) {
+      url = 'http://localhost:5001/collectBook';
+    } else if (issuedBooks.issued_id) {
+      url = 'http://localhost:5001/reIssueBook';
+    } else if (issuedBooks.sid && issuedBooks.book_id) {
+      url = 'http://localhost:5001/addLostBook';
+    }
     try {
       const response = await fetch(url, {
         method: 'POST',
@@ -91,14 +102,14 @@ const MainContent = ({ token }) => {
     setSearchTerm(e.target.value);
   };
 
-  const filteredBooks = bookInfo.filter((book) =>
+  const filteredBooks = bookInfo?.filter((book) =>
     book.book_id?.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   return (
     <div className="mainContent">
       <div className="time">
-        <h2>Hello, User</h2>
+        <h2>Hello, {name}</h2>
         <div>
           <DateComponent />
         </div>
@@ -125,7 +136,7 @@ const MainContent = ({ token }) => {
       />
 
       {/* Render table with filtered book info */}
-      
+
       {/* Render table with filtered book info */}
       <table>
         <thead>
@@ -138,7 +149,7 @@ const MainContent = ({ token }) => {
           </tr>
         </thead>
         <tbody>
-          {filteredBooks.map((book) => (
+          {filteredBooks?.map((book) => (
             <tr key={book.issued_id}>
               <td>{book.book_id}</td>
               <td>{book.sid}</td>
@@ -156,6 +167,12 @@ const MainContent = ({ token }) => {
                   onClick={() => handleActionButtonClick(book.issued_id, 'collect')}
                 >
                   Collect
+                </button>
+                <button
+                  className="rbutton"
+                  onClick={() => handleActionButtonClick(book.issued_id, 'lost')}
+                >
+                  Lost Book
                 </button>
               </td>
             </tr>

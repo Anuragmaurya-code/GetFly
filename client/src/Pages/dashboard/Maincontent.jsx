@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import './Maincontent.css';
 import { useNavigate } from 'react-router-dom';
 import DateComponent from '../../components/DateComponent';
-const MainContent = ({token}) => {
+const MainContent = ({token,name}) => {
   const [data, setData] = useState({
     bi: '',
     tb: '',
@@ -37,7 +37,7 @@ const MainContent = ({token}) => {
   return (
     <div className= "mainContent">
       <div className="time">
-        <h2>Hello, User</h2>
+        <h2>Hello, {name}</h2>
         <div>
           <DateComponent />
         </div>

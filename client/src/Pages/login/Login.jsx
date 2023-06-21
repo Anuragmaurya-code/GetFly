@@ -1,9 +1,12 @@
 import React, { useState } from 'react';
 import './login.css';
+
+import { Link } from 'react-router-dom';
 import logo from './logo.png';
 import { AiFillEye, AiFillEyeInvisible } from 'react-icons/ai';
 import { useNavigate } from 'react-router-dom';
-export default function Login({onLogin}) {
+
+export default function Login({ onLogin }) {
   const [eye, setEye] = useState(false);
   const [formFields, setFormFields] = useState({
     email: '',
@@ -23,19 +26,18 @@ export default function Login({onLogin}) {
     })
       .then(response => response.json())
       .then(response => {
-        if (response.token)
-        { onLogin(response.token)
-          navigate("/dashboard")
-        }
-        else
+        if (response.token) {
+          console.log(response.data)
+          onLogin(response.token,response.data);
+          navigate("/dashboard");
+        } else {
           alert("Invalid Credentials");
-
+        }
       })
       .catch(error => {
         // Handle any errors
         console.error(error);
       });
-
   };
 
   const handleInputChange = (e) => {
@@ -94,6 +96,14 @@ export default function Login({onLogin}) {
             <button type="submit" className="button buttonFontSize">
               LOGIN
             </button>
+            
+            <div className="center">
+              <Link to='/signup' className="link">
+                <button type="submit" className="button buttonFontSize"> 
+                  SIGN UP
+                </button>
+              </Link>
+            </div>
           </form>
           <p className="anchorP">www.getflytechnologies.com</p>
         </div>

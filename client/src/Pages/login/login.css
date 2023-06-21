@@ -99,6 +99,8 @@
             border: none;
             border-radius: 4px;
             margin: 25px auto auto auto;
+            position:relative;
+            justify-content: center;
 }
 
 .anchorP{
@@ -126,4 +128,10 @@
         padding: 10%;
     }
 }
+.center {
+    display: flex;
+    justify-content: center;
+  }
+  
+
 

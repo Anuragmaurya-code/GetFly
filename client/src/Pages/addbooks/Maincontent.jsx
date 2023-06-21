@@ -5,7 +5,7 @@ import DateComponent from '../../components/DateComponent';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 
-const Maincontent = ({ token }) => {
+const Maincontent = ({ token,name}) => {
   const [formData, setFormData] = useState({
     book_id: '',
     title: '',
@@ -72,7 +72,7 @@ const Maincontent = ({ token }) => {
   return (
     <div className="mainContent">
       <div className="time">
-        <h2>Hello, User</h2>
+        <h2>Hello, {name}</h2>
         <div>
           <DateComponent />
         </div>
