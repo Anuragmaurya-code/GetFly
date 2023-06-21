@@ -17,7 +17,6 @@ module.exports = function collectBook(req, res) {
     )
     .then((data) => {
       console.log("Book collected successfully!");
-      console.log(data);
       res.status(200).json({
         result: true,
         message: "Book collected successfully!",

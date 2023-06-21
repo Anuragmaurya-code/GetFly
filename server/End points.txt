@@ -1,0 +1,106 @@
+End points
+1. /login (post) (Done)
+Request:
+{
+"sid": "abc@gmail.com",
+"password":"Pass123"
+}
+
+Response:
+{
+    result: true/false,
+    message:"Login successfull!",
+    token: "<Token Value>"
+}
+
+2. /addStudent (post) (Done)
+Request:
+{
+    "sid":"vu0f2021001",
+    "password":"<Password>",
+    "name": "Name",
+    "contact_number":9876543210,
+    "class": "TECOMPS"
+}
+
+Response:
+{
+    result: true/false,
+    message:"Registeration successfull!",
+}
+
+
+
+2. /dashboard (get) (Done)
+Response:
+{
+    "booksCount": 5,
+    "issuedBooks": 0,
+    "circulationBooks": 0,
+    "booksReissued": 0
+}
+
+3. /addBook (post) (Done)
+Request:
+{
+    "book_id":"DBMS",
+    "title": "Database Management Systen",
+    "sub_title":null,
+    "var_title": null,
+    "Author1": "Rajiv Chopra",
+    "Author2": null,
+    "Author3": null,
+    "corp_author": null,
+    "volume":1,
+    "editor":null,
+    "edition": "Fifth",
+    "publishers": "S Chand Publishing",
+    "place":"India",
+    "year_of_publication": 2016,
+    "date_added": "2023-06-09 02:43:24",
+    "date_modified": null,
+    "library":null,
+    "amount": 432,
+    "order_number": 101,
+    "quantity": 5
+}
+
+4. /issueBook (post) (DONE)
+Request:
+{
+    "issued_id":"1"
+}
+Response:
+{
+    "result": true,
+    "message": "Data updated successfully!"
+}
+
+5. /reIssueBook (post) (Done)
+Request:
+{
+    "issued_id":"2"
+}
+Response:
+{
+    "result": true,
+    "message": "Book Reissued Successfully!"
+}
+
+6. /collectBook (post) (Done)
+Request:
+{
+    "issued_id":"1",
+     "return_date":'2023-06-19"
+}
+Response:
+{
+    "result": true,
+    "message": "Book collected successfully!"
+}
+
+
+
+8. /report (get) (Pending)
+resquesting URL:
+?reportName={ issuedBooks, reIssuedBooks, circulatedBooks, dueDatedBooks, lostBooks}&startDate=2023-06-12&endDate=2023-06-19

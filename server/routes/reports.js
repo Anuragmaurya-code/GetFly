@@ -3,14 +3,14 @@ const verifyToken = require("../middleware/verifyToken");
 const reportController = require("../controllers/reportController");
 const router = express.Router();
 
-router.get("/", verifyToken, reportController);
+router.post("/", verifyToken, reportController);
 
 
 router.all("/dailyTransaction", verifyToken, (req, res) => {
   res.send("Daily book transaction report");
 });
 
-router.all("/dailyReissued", verifyToken, (req, res) => {
+router.all("/dailyReissued ", verifyToken, (req, res) => {
   res.send("Daily book reissued report");
 });
 

@@ -8,6 +8,10 @@ const Student = connection.define(
       primaryKey: true,
       allowNull: false,
     },
+    password: {
+      type: Sequelize.DataTypes.STRING,
+      allowNull: false,
+    },
     name: {
       type: Sequelize.DataTypes.STRING,
       allowNull: false,
@@ -23,7 +27,9 @@ const Student = connection.define(
   },
   {
     freezeTableName: true,
-    timeStamps: true,
+    timeStamps: false,
+    createdAt: false,
+    updatedAt: false,
   }
   //   function (require, factory) {
   //     "use strict";

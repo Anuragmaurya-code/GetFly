@@ -3,6 +3,8 @@ const express = require("express");
 const app = express();
 const bodyParser = require("body-parser");
 const sequelize = require("./dbconfig");
+const cors = require('cors')
+app.use(cors())
 
 // ! Routes importing
 const loginRoute = require("./routes/login");
@@ -46,11 +48,8 @@ const studentModel = require("./models/Student");
 const issueBookModel = require("./models/issueBook");
 const quantityModel = require("./models/quantity");
 const bookModel = require("./models/Book");
-const cors = require('cors')
-app.use(cors())
 
 sequelize.sync().then((data) => {
-  // console.log(data);
   console.log("All tables synced");
 });
 

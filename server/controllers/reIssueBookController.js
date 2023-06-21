@@ -65,6 +65,7 @@ module.exports = function reIssueBook(req, res) {
 
                 //   * Sending response in order to let the user know that Book reissued
                 res.status(200).json({
+                  result: true,
                   message: "Book Reissued Successfully!",
                 });
               });
@@ -74,6 +75,7 @@ module.exports = function reIssueBook(req, res) {
     .catch((err) => {
       console.log("Something went wrong!");
       res.status(500).json({
+        result: false,
         message: "Something went wrong!",
         err: err,
       });

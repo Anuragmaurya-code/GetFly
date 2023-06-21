@@ -1,34 +1,35 @@
 const Sequelize = require("sequelize");
 const studentModel = require("../models/Student");
 const Student = require("../models/Student");
+const md5 = require("md5");
+const { MD5 } = require("crypto-js");
 
 // function createStudent() {
 
 module.exports = function createStudent(req, res) {
   // console.log(req.body.sid.toUpperCase());
+  let b = req.body;
+  pass = md5(b.password);
   Student.create({
-    sid: req.body.sid.toUpperCase(),
-    name: req.body.name,
-    contact_number: req.body.contact_number,
-    class: req.body.class.toUpperCase(),
-    createdAt: Date.now(),
-    updatedAt: Date.now(),
+    sid: b.sid.toUpperCase(),
+    password: pass,
+    name: b.name,
+    contact_number: b.contact_number,
+    class: b.class.toUpperCase(),
   })
     .then(() => {
-      console.log("Data added!");
+      console.log("Student added!");
       res.status(200).json({
-        message: "Data Added Successfully!",
+        result: true,
+        message: "Registeration Successfull!",
       });
     })
     .catch((error) => {
-      console.log("Error while adding student data");
-      // console.log(error.message);
-      // console.log(error.name);
-      console.log(error.errors[0].message);
+      console.log("Error while registeration student");
       res.status(500).json({
-        message: error.errors[0].message,
-        errorType: error.message,
-        // description: error.errors[0].message,
+        result: false,
+        message: "Something went wrong while registeration student data",
+        error: error,
       });
     });
 };
