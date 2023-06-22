@@ -3,18 +3,30 @@ import './Maincontent.css';
 import { useNavigate } from 'react-router-dom';
 import DateComponent from '../../components/DateComponent';
 
-const MainContent = ({ token,sid }) => {
-  const [currentTime, setCurrentTime] = useState(new Date());
+
+const MainContent = ({ token, sid, name }) => {
+  const [bookIds, setBookIds] = useState([]);
+  const [filteredBookIds, setFilteredBookIds] = useState([]);
   const navigate = useNavigate();
 
   useEffect(() => {
-    const timer = setInterval(() => {
-      setCurrentTime(new Date());
-    }, 1000);
-
-    return () => {
-      clearInterval(timer);
-    };
+    fetch('http://localhost:5001/data/getBookId', {
+      method: 'GET',
+      headers: {
+        'Authorization': 'Bearer ' + token,
+        'Content-Type': 'application/json'
+      },
+    })
+      .then(response => response.json())
+      .then(response => {
+        console.log(response.data);
+        setBookIds(response.data); // Set all book IDs
+        setFilteredBookIds(response.data); // Set filtered book IDs initially
+      })
+      .catch(error => {
+        // Handle any errors
+        console.error(error);
+      });
   }, []);
 
   const [formFields, setFormFields] = useState({
@@ -41,13 +53,30 @@ const MainContent = ({ token,sid }) => {
       ("0" + (date_ob.getMonth() + 1)).slice(-2) +
       "-" +
       (date_ob.getDate() + 7);
-    setFormFields((prevState) => ({
-      ...prevState,
-      [id]: value,
-      issue_date: issue_date,
-      due_date: due_date,
-    }));
+
+    if (id === 'book_id') {
+      setFormFields((prevState) => ({
+        ...prevState,
+        [id]: value,
+      }));
+      // Set the selected book ID as the value for the search input
+    } else {
+      setFormFields((prevState) => ({
+        ...prevState,
+        [id]: value,
+        issue_date: issue_date,
+        due_date: due_date,
+      }));
+    }
   };
+
+
+  const handleSearch = (event) => {
+    const searchQuery = event.target.value;
+    const filteredIds = bookIds.filter(id => id.includes(searchQuery));
+    setFilteredBookIds(filteredIds);
+  };
+
 
   const handleUpdateButtonClick = async () => {
     // Do something with the form fields
@@ -71,7 +100,7 @@ const MainContent = ({ token,sid }) => {
   return (
     <div className="mainContent">
       <div className="time">
-        <h2>Hello, User</h2>
+        <h2>Hello, {name}</h2>
         <div>
           <DateComponent />
         </div>
@@ -82,17 +111,29 @@ const MainContent = ({ token,sid }) => {
         <div className="issueBooks">
           <h2>Master Tab {'>'} Issue Book</h2>
           <form onSubmit={handleUpdateButtonClick}>
-           
-            
-            
+
+
+
             <div className="form-field">
               <label htmlFor="quantity_id">Quantity Id<span style={{ color: 'red' }}>*</span></label>
               <input type="text" id="quantity_id" value={formFields.quantity_id} onChange={handleInputChange} required />
             </div>
             <div className="form-field">
               <label htmlFor="book_id">Book Id<span style={{ color: 'red' }}>*</span></label>
-              <input type="text" id="book_id" value={formFields.book_id} onChange={handleInputChange} required />
+              <div className='search' >
+                <select id="book_id" value={formFields.book_id} onChange={handleInputChange} placeholder='hi' required>
+                <option value=''>Select Book Id</option>
+                  {filteredBookIds.map(id => (
+                    <option key={id} value={id}>{id}</option>
+                  ))}
+                </select>
+                <input type="text"  onChange={handleSearch} placeholder='search Book id' />
+
+              </div>
+
             </div>
+
+
             <div>
               <button type="submit" className="small-button" style={{ backgroundColor: 'darkblue', color: 'white' }}>
                 Issue Book

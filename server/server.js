@@ -17,6 +17,7 @@ const collectBookRouter = require("./routes/collectBook");
 const addStudentRoute = require("./routes/addStudent");
 const addLostBookRoute = require("./routes/addLostBook");
 const reportsRoute = require("./routes/reports");
+const commonRoute = require("./routes/commonRoutes");
 
 const dotenv = require("dotenv");
 
@@ -65,6 +66,7 @@ app.use("/collectBook", collectBookRouter);
 app.use("/addLostBook", addLostBookRoute);
 app.use("/addStudent", addStudentRoute);
 app.use("/report", reportsRoute);
+app.use("/data", commonRoute);
 
 app.listen(
   process.env.PORT || 5002,

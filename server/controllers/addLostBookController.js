@@ -1,6 +1,7 @@
 const express = require("express");
 const LostBook = require("../models/LostBook");
 const quantity = require("../models/quantity");
+const issuedBook = require("../models/issueBook");
 const Book = require("../models/Book");
 
 module.exports = function addLostBook(req, res) {
@@ -20,7 +21,6 @@ module.exports = function addLostBook(req, res) {
         sid: b.sid,
         date: b.date,
       }).then((data) => {
-        // console.log(data);
         quantity
           .findOne({
             where: {
@@ -29,6 +29,7 @@ module.exports = function addLostBook(req, res) {
           })
           .then((data) => {
             let a = data.dataValues.available_quantity - 1;
+
             quantity.update(
               {
                 available_quantity: a,
@@ -41,11 +42,24 @@ module.exports = function addLostBook(req, res) {
             );
           })
           .then((data) => {
-            console.log(data);
-            res.status(200).json({
-              result: true,
-              message: "Lost book added successfully!",
-            });
+            issuedBook
+              .update(
+                {
+                  isReturned: true,
+                },
+                {
+                  where: {
+                    book_id: b.book_id,
+                    sid: b.sid,
+                  },
+                }
+              )
+              .then((data) => {
+                res.status(200).json({
+                  result: true,
+                  message: "Lost book added successfully!",
+                });
+              });
           });
       });
     })

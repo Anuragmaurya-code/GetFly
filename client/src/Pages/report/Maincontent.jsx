@@ -82,7 +82,7 @@ const MainContent = ({ token, name, sid }) => {
           <div className="relect">
             <label htmlFor="report">Select Report </label>
             <select className="drelect" id="report" onChange={handleReportSelection}>
-              <option value="">Daily Transaction Report</option>
+              <option value="">Select Report Type</option>
               <option value="issuedBooks">Daily book transaction</option>
               <option value="reIssuedBooks">Daily book reissued</option>
               <option value="lostBooks">Lost book</option>
